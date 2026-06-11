@@ -28,7 +28,6 @@
             border-radius: 32px;
             box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.3);
             overflow: hidden;
-            transition: all 0.2s ease;
         }
 
         .tabs {
@@ -44,10 +43,8 @@
             background: #1e2b3c;
             border: none;
             font-weight: 600;
-            transition: all 0.25s;
             font-size: 15px;
             color: #eef4ff;
-            letter-spacing: 0.3px;
         }
 
         .tab.active {
@@ -62,12 +59,6 @@
 
         .tab-content.active {
             display: block;
-            animation: fadeSlide 0.25s ease-out;
-        }
-
-        @keyframes fadeSlide {
-            from { opacity: 0; transform: translateY(8px);}
-            to { opacity: 1; transform: translateY(0);}
         }
 
         .chat-header {
@@ -80,7 +71,6 @@
         .chat-header h2 {
             font-size: 1.65rem;
             font-weight: 600;
-            letter-spacing: -0.3px;
             margin-bottom: 6px;
         }
 
@@ -100,7 +90,6 @@
 
         .badge {
             background: rgba(255,255,255,0.18);
-            backdrop-filter: blur(2px);
             padding: 5px 12px;
             border-radius: 40px;
             font-size: 0.75rem;
@@ -112,20 +101,11 @@
             overflow-y: auto;
             padding: 20px 14px;
             background: #f7f9fc;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
         }
 
         .message {
             margin-bottom: 10px;
             display: flex;
-            animation: fadeInMsg 0.25s ease;
-        }
-
-        @keyframes fadeInMsg {
-            from { opacity: 0; transform: translateY(6px);}
-            to { opacity: 1; transform: translateY(0);}
         }
 
         .message.user { justify-content: flex-end; }
@@ -138,7 +118,6 @@
             font-size: 14px;
             line-height: 1.45;
             word-wrap: break-word;
-            box-shadow: 0 1px 1px rgba(0,0,0,0.05);
         }
 
         .user .message-content {
@@ -172,7 +151,6 @@
             cursor: pointer;
             font-size: 12px;
             font-weight: 500;
-            transition: 0.2s;
         }
 
         .quick-btn:hover {
@@ -186,7 +164,6 @@
             border-top: 1px solid #e2e8f0;
             display: flex;
             gap: 10px;
-            align-items: center;
         }
 
         .chat-input {
@@ -196,12 +173,10 @@
             border-radius: 32px;
             outline: none;
             font-size: 14px;
-            background: #fefefe;
         }
 
         .chat-input:focus {
             border-color: #2c7da0;
-            box-shadow: 0 0 0 2px rgba(44,125,160,0.2);
         }
 
         .send-button {
@@ -212,7 +187,6 @@
             border-radius: 32px;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.2s;
         }
 
         .send-button:hover {
@@ -234,13 +208,10 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            transition: 0.2s;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
         .whatsapp-btn:hover {
             background: #128C7E;
-            transform: scale(0.98);
         }
 
         .faq-container {
@@ -307,7 +278,6 @@
             border-radius: 24px;
             font-family: inherit;
             font-size: 14px;
-            background: white;
         }
 
         .contact-form button {
@@ -341,15 +311,6 @@
             font-size: 13px;
             text-align: center;
         }
-        .subject-tag {
-            background: #2c7da0;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 40px;
-            font-size: 12px;
-            display: inline-block;
-            margin: 3px;
-        }
     </style>
 </head>
 <body>
@@ -379,19 +340,19 @@
                     I specialise in <strong>JC H2/H1 Math, Secondary E-Math, A-Math (Additional Math), IP Math, and IB Math</strong>.<br><br>
                     ✅ <strong>More than 20 years of teaching experience</strong> (ex-MOE school teacher + full-time tutor).<br><br>
                     📱 <strong>WhatsApp me at 9137 5097</strong> to check slot availability & discuss your learning needs.<br><br>
-                    What level/subject are you looking for?
+                    What would you like to know?
                 </div>
             </div>
         </div>
         <div class="quick-buttons">
-            <button class="quick-btn" onclick="askQuickQuestion('Can you teach H2 Math?')">📐 JC H2 Math</button>
-            <button class="quick-btn" onclick="askQuickQuestion('Can you teach H1 Math?')">📘 JC H1 Math</button>
-            <button class="quick-btn" onclick="askQuickQuestion('Can you teach Additional Math?')">📐 A-Math / Add Math</button>
-            <button class="quick-btn" onclick="askQuickQuestion('Do you teach secondary math?')">📚 Sec E-Math</button>
+            <button class="quick-btn" onclick="askQuickQuestion('What are your fees?')">💰 Fees</button>
+            <button class="quick-btn" onclick="askQuickQuestion('Can you teach H2 Math?')">📐 H2 Math</button>
+            <button class="quick-btn" onclick="askQuickQuestion('Can you teach A-Math?')">📘 A-Math</button>
+            <button class="quick-btn" onclick="askQuickQuestion('Do you teach secondary math?')">📚 Secondary</button>
             <button class="quick-btn" onclick="askQuickQuestion('What is your availability?')">📅 Slots</button>
         </div>
         <div class="chat-input-container">
-            <input type="text" class="chat-input" id="chatInput" placeholder="Ask about H2, H1, A-Math, schedule..." onkeypress="handleKeyPress(event)">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Ask about fees, subjects, schedule..." onkeypress="handleKeyPress(event)">
             <button class="send-button" onclick="sendMessage()">Send</button>
         </div>
         <button class="whatsapp-btn" onclick="openWhatsApp()">
@@ -404,7 +365,7 @@
         <div class="faq-container">
             <div class="profile-note">
                 ⭐ <strong>Mr Roland Lee</strong> – Dedicated full-time Math tutor<br>
-                📚 Experienced with MOE syllabus, IP, IB, and exam preparation.
+                📚 20+ years experience | Ex-MOE teacher | NUS Math graduate
             </div>
             <input type="text" class="faq-search" id="faqSearch" placeholder="🔍 Search FAQ..." onkeyup="searchFAQ()">
             <div id="faqList"></div>
@@ -439,81 +400,99 @@
 
 <script>
     // ======================= CONFIGURATION =======================
-    const WHATSAPP_NUMBER = "6591375097";     // Singapore number without '+' , 65 + 91375097
+    const WHATSAPP_NUMBER = "6591375097";  // 65 + 91375097
     const TUTOR_NAME = "Mr Roland Lee";
 
-    // ----- enhanced response logic: any math subject inquiry gets positive + experience
+    // ======================= FEE INFORMATION =======================
+    function getFeeResponse() {
+        return "💰 <strong>My Tuition Fees:</strong><br><br>" +
+               "📐 <strong>JC H2 / H1 Math / IP / IB Math:</strong><br>" +
+               "• $80 per hour<br>" +
+               "• $120 per 1.5 hours<br><br>" +
+               "📚 <strong>Secondary Math (E-Math / A-Math):</strong><br>" +
+               "• $60 per hour<br>" +
+               "• $90 per 1.5 hours<br><br>" +
+               "🏠 1-to-1 home tuition at your location<br>" +
+               "📱 WhatsApp me at 9137 5097 to check availability!";
+    }
+
+    // ======================= MATH SUBJECT RESPONSES (WITH EXPERIENCE) =======================
+    function getMathSubjectResponse(subject) {
+        const lowerSubject = subject.toLowerCase();
+        
+        if (lowerSubject.includes('h2') || (lowerSubject.includes('jc') && lowerSubject.includes('math'))) {
+            return "📐 Yes, I teach <strong>JC H2 Math</strong>! With over 20 years of experience (including as a former MOE school teacher), I've helped many JC students master H2 Math - both Pure Math and Statistics. I provide 1-to-1 home tuition tailored to the MOE syllabus. WhatsApp me at 9137 5097 to discuss your needs!";
+        }
+        if (lowerSubject.includes('h1')) {
+            return "✅ Yes, I teach <strong>JC H1 Math</strong>! With my 20+ years of teaching experience (ex-MOE teacher), I simplify H1 Math concepts like Probability, Statistics, and Calculus. Many of my H1 students have shown great improvement. WhatsApp 9137 5097 to check slots!";
+        }
+        if (lowerSubject.includes('additional') || lowerSubject.includes('a-math') || lowerSubject.includes('a math') || lowerSubject.includes('add math')) {
+            return "📘 Yes! <strong>Additional Mathematics (A-Math)</strong> is one of my specialisations. With over 20 years of experience teaching A-Math, I help students master quadratic equations, trigonometry, differentiation, and integration. WhatsApp me at 9137 5097 for available slots!";
+        }
+        if (lowerSubject.includes('e-math') || lowerSubject.includes('e math') || (lowerSubject.includes('secondary') && lowerSubject.includes('math'))) {
+            return "📚 Definitely! I teach <strong>Secondary E-Math</strong>. With my ex-MOE school teacher background and 20+ years of private tutoring, I focus on building strong fundamentals in algebra, geometry, and data analysis. WhatsApp 9137 5097 to arrange a time!";
+        }
+        if (lowerSubject.includes('ip')) {
+            return "🎓 Yes, I tutor <strong>IP Math</strong> (Integrated Programme). I understand the rigour required and help IP students excel in advanced problem-solving. With over 20 years of experience, I ensure strong conceptual clarity. WhatsApp me at 9137 5097!";
+        }
+        if (lowerSubject.includes('ib')) {
+            return "🌍 Yes, I teach <strong>IB Math</strong> (both Analysis & Approaches and Applications & Interpretation). I've guided IB students for many years, focusing on internal assessments and exam strategies. WhatsApp 9137 5097 to discuss!";
+        }
+        return null;
+    }
+
+    // ======================= CHECK IF QUESTION IS ABOUT FEES =======================
+    function isFeeQuery(text) {
+        const lower = text.toLowerCase();
+        const feeKeywords = ['fee', 'fees', 'rate', 'rates', 'cost', 'price', 'pricing', 'how much', 'charge', 'charges', 'hourly rate', 'payment'];
+        return feeKeywords.some(keyword => lower.includes(keyword));
+    }
+
+    // ======================= CHECK IF QUESTION IS ABOUT MATH SUBJECTS =======================
     function isMathSubjectQuery(text) {
         const lower = text.toLowerCase();
-        const mathKeywords = [
-            'h2 math', 'h2 maths', 'jc math', 'jc maths', 'h1 math', 'h1 maths',
-            'e math', 'e-math', 'emath', 'secondary math', 'secondary maths',
-            'a math', 'a-math', 'amath', 'add math', 'additional math', 'additional maths',
-            'sec math', 'sec maths', 'ip math', 'ib math', 'ib maths', 'math tuition',
-            'can you teach', 'teach math', 'maths', 'pure math', 'statistics'
+        const subjectKeywords = [
+            'h2 math', 'h1 math', 'jc math', 'a-math', 'a math', 'add math', 'additional math',
+            'e-math', 'e math', 'secondary math', 'ip math', 'ib math', 'teach'
         ];
-        return mathKeywords.some(keyword => lower.includes(keyword));
+        return subjectKeywords.some(keyword => lower.includes(keyword));
     }
 
-    function generatePositiveMathResponse(question) {
-        const lowerQ = question.toLowerCase();
-        // specific subject mapping
-        if (lowerQ.includes('h2 math') || lowerQ.includes('jc math') || (lowerQ.includes('jc') && lowerQ.includes('math'))) {
-            return "📐 Absolutely! I have extensive experience teaching **JC H2 Math** (including Pure Math & Statistics). With my strong Mathematics background (NUS) and over 20 years of teaching, I’ve helped many JC students master H2 concepts and ace their exams. I keep up with the latest MOE syllabus and provide structured 1-to-1 home tuition. 📱 WhatsApp me at 9137 5097 to discuss slot availability!";
-        }
-        if (lowerQ.includes('h1 math')) {
-            return "✅ Yes! I teach **H1 Math** as well. My experience as a former school teacher and 20+ years of private tuition allows me to simplify core topics like Probability, Statistics, and Calculus. Many H1 students have improved significantly under my guidance. Want to check timing? Just drop me a WhatsApp at 9137 5097.";
-        }
-        if (lowerQ.includes('additional math') || lowerQ.includes('a-math') || lowerQ.includes('a math') || lowerQ.includes('add math')) {
-            return "📘 Of course! **Additional Mathematics (A-Math)** is one of my key specialisations. I've been teaching A-Math for more than two decades, helping students master quadratic equations, trigonometry, differentiation, and integration. I pinpoint weak areas fast and boost confidence. Feel free to WhatsApp 9137 5097 for available slots!";
-        }
-        if (lowerQ.includes('e math') || lowerQ.includes('e-math') || (lowerQ.includes('secondary') && lowerQ.includes('math'))) {
-            return "📚 Definitely! **Secondary E-Math** is foundational, and I have rich experience (ex-MOE teacher + 20+ years tutoring). I make sure students understand concepts like algebra, geometry, data analysis, and problem-solving strategies. I provide step-by-step guidance and exam techniques. Let’s chat on WhatsApp 9137 5097 to arrange a suitable time slot.";
-        }
-        if (lowerQ.includes('ip math') || lowerQ.includes('integrated programme')) {
-            return "🎓 Yes! I tutor **IP Math** (Integrated Programme). I understand the rigour and depth required, and I help IP students excel in advanced problem-solving and extended mathematical thinking. With my broad exposure to different curricula, I ensure strong conceptual clarity. WhatsApp me at 9137 5097 to check my current IP slots.";
-        }
-        if (lowerQ.includes('ib math') || lowerQ.includes('ib maths')) {
-            return "🌍 Yes, I teach **IB Math** (both Analysis & Approaches and Applications & Interpretation). Having guided IB students for many years, I focus on internal assessments and exam strategies. My experience ensures students meet IB criteria confidently. Reach out on WhatsApp 9137 5097 for available slots!";
-        }
-        // generic math teaching positive
-        return `I’d be glad to help with ${question.includes('?') ? 'that' : 'math'}! With over 20 years of experience teaching JC H2/H1 Math, Secondary E-Math, A-Math, IP, and IB Math (plus ex-MOE school teacher background), I provide customised 1-to-1 home tuition. Many of my students see remarkable improvement. WhatsApp me at 9137 5097 to discuss your learning goals and current availability.`;
-    }
-
-    // General knowledge base (no fees/experience in title, just pure help)
+    // ======================= GENERAL KNOWLEDGE BASE =======================
     const knowledgeBase = {
         availability: {
             keywords: ['availability', 'slot', 'slots', 'available', 'free', 'timing', 'schedule', 'when free', 'open slot'],
-            response: "📅 Slots vary each week due to ongoing students. For the most accurate availability, please **WhatsApp me directly at 9137 5097** with your preferred days/times and location. I'll reply within a few hours with confirmed openings."
+            response: "📅 Slots vary each week. For accurate availability, please <strong>WhatsApp me at 9137 5097</strong> with your preferred days/times and location. I'll reply within a few hours!"
         },
         booking: {
-            keywords: ['book', 'booking', 'sign up', 'register', 'enroll', 'start lesson', 'how to start'],
-            response: "📝 To book a session: 1) WhatsApp me (9137 5097) your child's level & subject. 2) Share preferred schedule. 3) I will confirm slot availability. First lesson details will be arranged after confirmation. Looking forward to helping you excel in Math!"
+            keywords: ['book', 'booking', 'sign up', 'register', 'enroll', 'start', 'how to start'],
+            response: "📝 To book: 1) WhatsApp 9137 5097 with your level & subject. 2) Share preferred schedule. 3) I'll confirm available slots. Looking forward to helping you excel in Math!"
         },
         cancellation: {
             keywords: ['cancel', 'cancellation', 'refund', 'miss', 'absent', 'postpone', 'reschedule'],
-            response: "❌ Cancellation/Reschedule: 24+ hours notice → no charge. Less than 24 hours → 50% of lesson fee. No-show → full fee. Make-up lessons can be arranged with advance notice via WhatsApp."
+            response: "❌ 24+ hours notice → no charge. Less than 24 hours → 50% fee. No-show → full fee. Make-up lessons can be arranged via WhatsApp."
         },
         location: {
             keywords: ['location', 'area', 'travel', 'distance', 'east', 'west', 'north', 'south', 'central'],
-            response: "🏠 I travel to your home for 1-to-1 tuition (most parts of Singapore). Please WhatsApp 9137 5097 your postal code and I'll confirm if travel is feasible. Additional travel fee may apply for far zones."
+            response: "🏠 I travel to your home for 1-to-1 tuition (most parts of Singapore). WhatsApp 9137 5097 your postal code and I'll confirm."
         },
-        materials: {
-            keywords: ['material', 'notes', 'worksheet', 'practice', 'homework', 'past year', 'resources', 'handout'],
-            response: "📚 I provide curated notes, topical worksheets, past-year papers (school & national exams), and weekly homework. All materials are tailored to the student's school syllabus and learning pace – included in the tuition."
+        experience: {
+            keywords: ['experience', 'qualification', 'background', 'years', 'how long', 'credential'],
+            response: "⭐ I have over 20 years of teaching experience, including 5 years as an MOE school teacher. I hold a Bachelor of Science in Mathematics from NUS. I specialise in JC H2/H1 Math, Secondary E-Math, A-Math, IP Math, and IB Math."
         }
     };
 
-    // FAQ items (no fee discussion, focus on subjects and experience)
+    // ======================= FAQ ITEMS =======================
     const faqItems = [
-        { q: "Which subjects do you teach?", a: "JC H2 Math, H1 Math, Secondary E-Math, A-Math (Additional Math), IP Math, IB Math. I've been teaching for over 20 years, ex-MOE school teacher." },
-        { q: "Do you have experience with H2 Math?", a: "Yes, extensive experience with JC H2 Math syllabus (Pure Math & Stats). I helped many students jump from D to A/B." },
-        { q: "Can you teach Additional Math (A-Math)?", a: "Absolutely! A-Math is one of my core specialities with 20+ years of coaching students to master challenging topics like calculus, trigo and polynomials." },
-        { q: "What about IP / IB Math?", a: "Yes, I tutor IP Math (Years 1-4) and IB Math (AA/AI). I adapt to the unique curriculum and assessment style." },
-        { q: "How do I know if you have slots?", a: "Slots change often – please WhatsApp me at 9137 5097 to check current availability. I reply promptly." },
-        { q: "Do you travel to student's home?", a: "Yes, 1-to-1 home tuition at student's residence. WhatsApp me your location to confirm feasibility." },
-        { q: "What is your teaching style?", a: "Conceptual clarity + guided practice + exam techniques. I tailor each lesson based on student's strengths and weaknesses." },
-        { q: "Are materials provided?", a: "Yes, I bring worksheets, notes and exam papers. Students only need to bring their school materials." }
+        { q: "What are your fees?", a: "JC/IP/IB: $80/hr or $120/1.5hrs. Secondary: $60/hr or $90/1.5hrs. 1-to-1 home tuition." },
+        { q: "Which subjects do you teach?", a: "JC H2/H1 Math, Secondary E-Math, A-Math (Additional Math), IP Math, IB Math. 20+ years experience, ex-MOE teacher." },
+        { q: "Do you have experience with H2 Math?", a: "Yes, extensive experience with JC H2 Math syllabus. I've helped many students improve significantly." },
+        { q: "Can you teach Additional Math (A-Math)?", a: "Absolutely! A-Math is one of my specialities with 20+ years of coaching experience." },
+        { q: "What about IP / IB Math?", a: "Yes, I tutor IP Math and IB Math (AA/AI), adapting to each curriculum's requirements." },
+        { q: "How do I check available slots?", a: "Please WhatsApp me at 9137 5097 for current availability – I'll reply within a few hours." },
+        { q: "Do you travel to student's home?", a: "Yes, 1-to-1 home tuition at your location. WhatsApp me your area to confirm." },
+        { q: "What is your teaching style?", a: "Conceptual clarity + guided practice + exam techniques. Customised to each student's needs." },
+        { q: "What are your qualifications?", a: "B.Sc Mathematics from NUS, ex-MOE school teacher (5 years), over 20 years private tuition experience." }
     ];
 
     function loadFAQ() {
@@ -552,7 +531,7 @@
     }
 
     function openWhatsApp() {
-        const msg = encodeURIComponent("Hi Mr Roland Lee, I’m interested in Math tuition. Do you have available slots?");
+        const msg = encodeURIComponent("Hi Mr Roland Lee, I'm interested in Math tuition. Do you have available slots?");
         window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
     }
 
@@ -571,12 +550,18 @@
     function generateResponse(userMsg) {
         const lowerMsg = userMsg.toLowerCase();
         
-        // HIGH PRIORITY: any math teaching inquiry → positive + experience
-        if (isMathSubjectQuery(userMsg)) {
-            return generatePositiveMathResponse(userMsg);
+        // PRIORITY 1: Fee-related questions → provide fee info
+        if (isFeeQuery(userMsg)) {
+            return getFeeResponse();
         }
         
-        // Check knowledge base for other (availability, booking, cancellation etc)
+        // PRIORITY 2: Math subject teaching questions → respond with experience
+        if (isMathSubjectQuery(userMsg)) {
+            const subjectResponse = getMathSubjectResponse(userMsg);
+            if (subjectResponse) return subjectResponse;
+        }
+        
+        // PRIORITY 3: Check knowledge base for other topics
         for (let cat in knowledgeBase) {
             if (knowledgeBase[cat].keywords.some(kw => lowerMsg.includes(kw))) {
                 return knowledgeBase[cat].response;
@@ -585,16 +570,15 @@
         
         // Greetings
         if (lowerMsg.includes('hello') || lowerMsg.includes('hi') || lowerMsg.includes('hey')) {
-            return `👋 Hello! I’m ${TUTOR_NAME}. I teach H2/H1 Math, Secondary E-Math, A-Math, IP & IB Math. With 20+ years experience (ex-MOE teacher), I provide 1-to-1 home tuition. Feel free to ask about any Math subject or slot availability!`;
+            return `👋 Hello! I'm ${TUTOR_NAME}. I teach JC H2/H1 Math, Secondary E-Math, A-Math, IP & IB Math. Ask me about fees, subjects, or availability!`;
         }
+        
         if (lowerMsg.includes('thank')) {
-            return "You're welcome! 😊 If you'd like to proceed, just WhatsApp me (9137 5097) to arrange a lesson or check slots. Happy to help!";
+            return "You're welcome! 😊 WhatsApp me at 9137 5097 if you'd like to check availability or book a lesson.";
         }
-        if (lowerMsg.includes('contact') || lowerMsg.includes('whatsapp number')) {
-            return "📱 You can reach me directly on WhatsApp: **9137 5097**. Click the green WhatsApp button below — I’ll reply within a few hours!";
-        }
-        // fallback
-        return `I specialise in **JC H2/H1 Math, Secondary E-Math, A-Math, IP and IB Math** (over 20 years' experience). 📱 Please WhatsApp 9137 5097 to check slots or ask about any specific topic. What would you like to know more about?`;
+        
+        // Default response
+        return `I specialise in JC H2/H1 Math, Secondary E-Math, A-Math, IP & IB Math (20+ years experience). 💰 Fees: JC $80/hr, Secondary $60/hr. 📱 WhatsApp 9137 5097 for availability. What would you like to know?`;
     }
 
     function sendMessage() {
@@ -636,13 +620,11 @@
         }
         const successDiv = document.getElementById('successMessage');
         successDiv.style.display = 'block';
-        // clear
         document.getElementById('studentName').value = '';
         document.getElementById('studentLevel').value = '';
         document.getElementById('studentArea').value = '';
         document.getElementById('studentMessage').value = '';
         setTimeout(() => successDiv.style.display = 'none', 3500);
-        console.log("Enquiry from", name, level, area, msg);
     }
 
     document.addEventListener('DOMContentLoaded', () => {
