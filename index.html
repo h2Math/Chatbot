@@ -319,20 +319,6 @@
             font-size: 13px;
             text-align: center;
         }
-        .area-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            justify-content: center;
-            margin-top: 10px;
-        }
-        .area-tag {
-            background: #2c7da0;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-        }
     </style>
 </head>
 <body>
@@ -366,7 +352,7 @@
                     👋 <strong>Hi, I'm Mr Roland Lee.</strong><br><br>
                     I specialise in <strong>JC H2/H1 Math, Secondary E-Math, A-Math (Additional Math), IP Math, and IB Math</strong>.<br><br>
                     ✅ <strong>More than 20 years of teaching experience</strong> (ex-MOE school teacher + full-time tutor).<br><br>
-                    📍 <strong>I teach in:</strong> East, North East, and Central Singapore (not West).<br><br>
+                    📍 <strong>I teach in:</strong> East, North East, and Central Singapore.<br><br>
                     📱 <strong>WhatsApp me at 9137 5097</strong> to check slot availability & discuss your learning needs.<br><br>
                     What would you like to know?
                 </div>
@@ -375,12 +361,12 @@
         <div class="quick-buttons">
             <button class="quick-btn" onclick="askQuickQuestion('What are your fees?')">💰 Fees</button>
             <button class="quick-btn" onclick="askQuickQuestion('Where do you teach?')">📍 Locations</button>
-            <button class="quick-btn" onclick="askQuickQuestion('Can you teach H2 Math?')">📐 H2 Math</button>
-            <button class="quick-btn" onclick="askQuickQuestion('Can you teach A-Math?')">📘 A-Math</button>
-            <button class="quick-btn" onclick="askQuickQuestion('What is your availability?')">📅 Slots</button>
+            <button class="quick-btn" onclick="askQuickQuestion('Do you have sibling discounts?')">👨‍👩‍👧 Discounts</button>
+            <button class="quick-btn" onclick="askQuickQuestion('What is your cancellation policy?')">❌ Cancellation</button>
+            <button class="quick-btn" onclick="askQuickQuestion('Do you offer online lessons?')">💻 Online</button>
         </div>
         <div class="chat-input-container">
-            <input type="text" class="chat-input" id="chatInput" placeholder="Ask about fees, locations, subjects..." onkeypress="handleKeyPress(event)">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Ask about fees, locations, discounts..." onkeypress="handleKeyPress(event)">
             <button class="send-button" onclick="sendMessage()">Send</button>
         </div>
         <button class="whatsapp-btn" onclick="openWhatsApp()">
@@ -394,7 +380,8 @@
             <div class="profile-note">
                 ⭐ <strong>Mr Roland Lee</strong> – Dedicated full-time Math tutor<br>
                 📚 20+ years experience | Ex-MOE teacher | NUS Math graduate<br>
-                📍 Teaching areas: <strong>East, North East, Central</strong>
+                📍 Teaching areas: <strong>East, North East, Central</strong><br>
+                💻 Zoom lessons available at same rate
             </div>
             <input type="text" class="faq-search" id="faqSearch" placeholder="🔍 Search FAQ..." onkeyup="searchFAQ()">
             <div id="faqList"></div>
@@ -429,19 +416,8 @@
 
 <script>
     // ======================= CONFIGURATION =======================
-    const WHATSAPP_NUMBER = "6591375097";  // 65 + 91375097
+    const WHATSAPP_NUMBER = "6591375097";
     const TUTOR_NAME = "Mr Roland Lee";
-
-    // ======================= LOCATION INFORMATION =======================
-    function getLocationResponse() {
-        return "📍 <strong>Where I Teach:</strong><br><br>" +
-               "I conduct 1-to-1 home tuition in the following areas:<br><br>" +
-               "✅ <strong>East:</strong> Tampines, Bedok, Pasir Ris, Simei, East Coast, Marine Parade, Changi<br>" +
-               "✅ <strong>North East:</strong> Serangoon, Hougang, Sengkang, Punggol, Buangkok, Kovan<br>" +
-               "✅ <strong>Central:</strong> Toa Payoh, Bishan, Ang Mo Kio, Novena, Newton, Balestier, Thomson<br><br>" +
-               "❌ <strong>Not available for West area</strong> (Jurong, Clementi, Bukit Batok, Bukit Panjang, Choa Chu Kang)<br><br>" +
-               "📱 WhatsApp me at 9137 5097 with your postal code to confirm if I can travel to your location!";
-    }
 
     // ======================= FEE INFORMATION =======================
     function getFeeResponse() {
@@ -452,17 +428,83 @@
                "📚 <strong>Secondary Math (E-Math / A-Math):</strong><br>" +
                "• $60 per hour<br>" +
                "• $90 per 1.5 hours<br><br>" +
+               "✅ <strong>Payment Terms:</strong><br>" +
+               "• Payment at end of month via PayNow or PayLah<br>" +
+               "• No registration fee<br>" +
+               "• No travel fee<br><br>" +
                "🏠 1-to-1 home tuition at your location<br>" +
-               "📍 I teach in East, North East & Central Singapore<br>" +
+               "💻 Zoom lessons also available at same rate<br>" +
                "📱 WhatsApp me at 9137 5097 to check availability!";
     }
 
-    // ======================= MATH SUBJECT RESPONSES (WITH EXPERIENCE) =======================
+    // ======================= LOCATION INFORMATION =======================
+    function getLocationResponse() {
+        return "📍 <strong>Where I Teach:</strong><br><br>" +
+               "I conduct 1-to-1 home tuition in the following areas:<br><br>" +
+               "✅ <strong>East:</strong> Tampines, Bedok, Pasir Ris, Simei, East Coast, Marine Parade, Changi<br>" +
+               "✅ <strong>North East:</strong> Serangoon, Hougang, Sengkang, Punggol, Buangkok, Kovan<br>" +
+               "✅ <strong>Central:</strong> Toa Payoh, Bishan, Ang Mo Kio, Novena, Newton, Balestier, Thomson<br><br>" +
+               "❌ <strong>Not available for West area</strong> (Jurong, Clementi, Bukit Batok, Bukit Panjang, Choa Chu Kang)<br><br>" +
+               "🚫 <strong>No travel fee</strong> for these areas.<br><br>" +
+               "💻 Alternatively, Zoom lessons are available at the same rate if you prefer online.<br><br>" +
+               "📱 WhatsApp me at 9137 5097 with your postal code to confirm if I can travel to your location!";
+    }
+
+    // ======================= DISCOUNT INFORMATION =======================
+    function getDiscountResponse() {
+        return "👨‍👩‍👧 <strong>Sibling Discount:</strong><br><br>" +
+               "Yes, I offer sibling discounts!<br><br>" +
+               "📱 <strong>Please WhatsApp me at 9137 5097 for details</strong> on the sibling discount structure.<br><br>" +
+               "The discount applies when two or more siblings from the same family sign up for tuition.";
+    }
+
+    // ======================= CANCELLATION POLICY =======================
+    function getCancellationResponse() {
+        return "❌ <strong>Cancellation Policy:</strong><br><br>" +
+               "• Please inform me <strong>at least one day in advance</strong> if you need to cancel a lesson.<br>" +
+               "• Lessons can be cancelled with proper notice.<br>" +
+               "• Make-up lessons can be arranged subject to slot availability.<br><br>" +
+               "📱 Always reach out via WhatsApp to inform me of any cancellations.";
+    }
+
+    // ======================= ONLINE LESSONS =======================
+    function getOnlineResponse() {
+        return "💻 <strong>Online Lessons (Zoom):</strong><br><br>" +
+               "Yes, I offer online tuition via Zoom!<br><br>" +
+               "• Same rate as home tuition<br>" +
+               "• Interactive whiteboard for teaching<br>" +
+               "• Can share notes and worksheets easily<br>" +
+               "• Convenient if you live outside my travel areas or prefer remote learning<br><br>" +
+               "📱 WhatsApp me at 9137 5097 to arrange Zoom lessons!";
+    }
+
+    // ======================= LESSON SCHEDULE =======================
+    function getScheduleResponse() {
+        return "📅 <strong>Lesson Schedule:</strong><br><br>" +
+               "• <strong>Frequency:</strong> Usually one lesson per week<br>" +
+               "• <strong>Weekends:</strong> Available on weekends, subject to slot availability<br>" +
+               "• <strong>School Holidays:</strong> Lessons continue as usual during holidays<br>" +
+               "• <strong>Extra Lessons:</strong> Can be arranged before exams, subject to availability of slots<br><br>" +
+               "📱 WhatsApp me at 9137 5097 to check current available time slots!";
+    }
+
+    // ======================= TEACHING PHILOSOPHY (What makes me different) =======================
+    function getTeachingPhilosophyResponse() {
+        return "🌟 <strong>What Makes My Teaching Different:</strong><br><br>" +
+               "• I have the ability to <strong>summarise difficult topics</strong> in an easy-to-understand manner.<br>" +
+               "• I <strong>correct students' mistakes on the spot</strong>, preventing bad habits from forming.<br>" +
+               "• By making lessons easy to understand, <strong>students' interest in Math increases</strong>.<br>" +
+               "• When students enjoy Math, <strong>good grades will naturally follow</strong>.<br><br>" +
+               "📚 With over 20 years of experience (ex-MOE school teacher + NUS Math graduate), I know exactly how to help students excel.<br><br>" +
+               "📱 WhatsApp me at 9137 5097 to experience my teaching style!";
+    }
+
+    // ======================= MATH SUBJECT RESPONSES =======================
     function getMathSubjectResponse(subject) {
         const lowerSubject = subject.toLowerCase();
         
         if (lowerSubject.includes('h2') || (lowerSubject.includes('jc') && lowerSubject.includes('math'))) {
-            return "📐 Yes, I teach <strong>JC H2 Math</strong>! With over 20 years of experience (including as a former MOE school teacher), I've helped many JC students master H2 Math - both Pure Math and Statistics. I provide 1-to-1 home tuition tailored to the MOE syllabus. 📍 I teach in East, North East & Central. WhatsApp me at 9137 5097 to discuss your needs!";
+            return "📐 Yes, I teach <strong>JC H2 Math</strong>! With over 20 years of experience (including as a former MOE school teacher), I've helped many JC students master H2 Math - both Pure Math and Statistics. I provide 1-to-1 home tuition tailored to the MOE syllabus. 📍 I teach in East, North East & Central. 💻 Zoom also available. WhatsApp me at 9137 5097 to discuss your needs!";
         }
         if (lowerSubject.includes('h1')) {
             return "✅ Yes, I teach <strong>JC H1 Math</strong>! With my 20+ years of teaching experience (ex-MOE teacher), I simplify H1 Math concepts like Probability, Statistics, and Calculus. Many of my H1 students have shown great improvement. 📍 Serving East, North East & Central. WhatsApp 9137 5097 to check slots!";
@@ -482,67 +524,149 @@
         return null;
     }
 
-    // ======================= CHECK IF QUESTION IS ABOUT LOCATION =======================
+    // ======================= QUERY DETECTION FUNCTIONS =======================
     function isLocationQuery(text) {
         const lower = text.toLowerCase();
-        const locationKeywords = [
-            'location', 'area', 'region', 'locate', 'where', 'teach where', 'which area', 
-            'east', 'west', 'north', 'south', 'central', 'tampines', 'bedok', 'pasir ris',
-            'serangoon', 'hougang', 'sengkang', 'punggol', 'toa payoh', 'bishan', 'ang mo kio',
-            'jurong', 'clementi', 'bukit', 'travel', 'distance', 'come to', 'home location'
-        ];
+        const locationKeywords = ['location', 'area', 'region', 'locate', 'where', 'teach where', 'which area', 'east', 'west', 'north', 'south', 'central', 'tampines', 'bedok', 'pasir ris', 'serangoon', 'hougang', 'sengkang', 'punggol', 'toa payoh', 'bishan', 'ang mo kio', 'travel', 'distance', 'come to'];
         return locationKeywords.some(keyword => lower.includes(keyword));
     }
 
-    // ======================= CHECK IF QUESTION IS ABOUT FEES =======================
     function isFeeQuery(text) {
         const lower = text.toLowerCase();
-        const feeKeywords = ['fee', 'fees', 'rate', 'rates', 'cost', 'price', 'pricing', 'how much', 'charge', 'charges', 'hourly rate', 'payment'];
+        const feeKeywords = ['fee', 'fees', 'rate', 'rates', 'cost', 'price', 'pricing', 'how much', 'charge', 'charges', 'hourly rate', 'payment', 'paynow', 'paylah', 'pay now', 'pay lah'];
         return feeKeywords.some(keyword => lower.includes(keyword));
     }
 
-    // ======================= CHECK IF QUESTION IS ABOUT MATH SUBJECTS =======================
+    function isDiscountQuery(text) {
+        const lower = text.toLowerCase();
+        const discountKeywords = ['discount', 'sibling', 'brother', 'sister', 'family', 'referral', 'cheaper', 'reduction'];
+        return discountKeywords.some(keyword => lower.includes(keyword));
+    }
+
+    function isCancellationQuery(text) {
+        const lower = text.toLowerCase();
+        const cancelKeywords = ['cancel', 'cancellation', 'refund', 'miss', 'absent', 'postpone', 'reschedule', 'day notice', 'advance notice'];
+        return cancelKeywords.some(keyword => lower.includes(keyword));
+    }
+
+    function isOnlineQuery(text) {
+        const lower = text.toLowerCase();
+        const onlineKeywords = ['online', 'zoom', 'remote', 'video call', 'internet', 'virtual', 'webcam'];
+        return onlineKeywords.some(keyword => lower.includes(keyword));
+    }
+
+    function isScheduleQuery(text) {
+        const lower = text.toLowerCase();
+        const scheduleKeywords = ['schedule', 'timing', 'time', 'when', 'how many lessons', 'per week', 'weekend', 'holiday', 'extra lesson', 'frequency'];
+        return scheduleKeywords.some(keyword => lower.includes(keyword));
+    }
+
+    function isTeachingStyleQuery(text) {
+        const lower = text.toLowerCase();
+        const styleKeywords = ['different', 'special', 'unique', 'teaching style', 'method', 'approach', 'summarise', 'correct mistakes', 'interest', 'enjoy'];
+        return styleKeywords.some(keyword => lower.includes(keyword));
+    }
+
     function isMathSubjectQuery(text) {
         const lower = text.toLowerCase();
-        const subjectKeywords = [
-            'h2 math', 'h1 math', 'jc math', 'a-math', 'a math', 'add math', 'additional math',
-            'e-math', 'e math', 'secondary math', 'ip math', 'ib math', 'teach'
-        ];
+        const subjectKeywords = ['h2 math', 'h1 math', 'jc math', 'a-math', 'a math', 'add math', 'additional math', 'e-math', 'e math', 'secondary math', 'ip math', 'ib math', 'teach'];
         return subjectKeywords.some(keyword => lower.includes(keyword));
     }
 
-    // ======================= GENERAL KNOWLEDGE BASE =======================
-    const knowledgeBase = {
-        availability: {
-            keywords: ['availability', 'slot', 'slots', 'available', 'free', 'timing', 'schedule', 'when free', 'open slot'],
-            response: "📅 Slots vary each week. For accurate availability, please <strong>WhatsApp me at 9137 5097</strong> with your preferred days/times and location. I'll reply within a few hours!"
-        },
-        booking: {
-            keywords: ['book', 'booking', 'sign up', 'register', 'enroll', 'start', 'how to start'],
-            response: "📝 To book: 1) WhatsApp 9137 5097 with your level & subject. 2) Share your location (East, North East, Central only). 3) Share preferred schedule. 4) I'll confirm available slots. Looking forward to helping you excel in Math!"
-        },
-        cancellation: {
-            keywords: ['cancel', 'cancellation', 'refund', 'miss', 'absent', 'postpone', 'reschedule'],
-            response: "❌ 24+ hours notice → no charge. Less than 24 hours → 50% fee. No-show → full fee. Make-up lessons can be arranged via WhatsApp."
-        },
-        experience: {
-            keywords: ['experience', 'qualification', 'background', 'years', 'how long', 'credential', 'ex-moe', 'nus'],
-            response: "⭐ I have over 20 years of teaching experience, including 5 years as an MOE school teacher. I hold a Bachelor of Science in Mathematics from NUS. I specialise in JC H2/H1 Math, Secondary E-Math, A-Math, IP Math, and IB Math."
+    function isExperienceQuery(text) {
+        const lower = text.toLowerCase();
+        const expKeywords = ['experience', 'qualification', 'background', 'years', 'how long', 'credential', 'ex-moe', 'nus', 'school teacher'];
+        return expKeywords.some(keyword => lower.includes(keyword));
+    }
+
+    // ======================= EXPERIENCE RESPONSE =======================
+    function getExperienceResponse() {
+        return "⭐ <strong>My Qualifications & Experience:</strong><br><br>" +
+               "• Bachelor of Science in Mathematics, National University of Singapore (NUS)<br>" +
+               "• Former MOE school teacher (5 years)<br>" +
+               "• Over 20 years of private tuition experience<br>" +
+               "• Specialist in JC H2/H1 Math, Secondary E-Math, A-Math, IP Math, and IB Math<br><br>" +
+               "📱 WhatsApp me at 9137 5097 to discuss how I can help your child!";
+    }
+
+    // ======================= MAIN RESPONSE GENERATOR =======================
+    function generateResponse(userMsg) {
+        const lowerMsg = userMsg.toLowerCase();
+        
+        // Location questions
+        if (isLocationQuery(userMsg)) {
+            return getLocationResponse();
         }
-    };
+        
+        // Fee questions
+        if (isFeeQuery(userMsg)) {
+            return getFeeResponse();
+        }
+        
+        // Discount questions
+        if (isDiscountQuery(userMsg)) {
+            return getDiscountResponse();
+        }
+        
+        // Cancellation questions
+        if (isCancellationQuery(userMsg)) {
+            return getCancellationResponse();
+        }
+        
+        // Online/Zoom questions
+        if (isOnlineQuery(userMsg)) {
+            return getOnlineResponse();
+        }
+        
+        // Schedule questions
+        if (isScheduleQuery(userMsg)) {
+            return getScheduleResponse();
+        }
+        
+        // Teaching style / "what makes you different" questions
+        if (isTeachingStyleQuery(userMsg)) {
+            return getTeachingPhilosophyResponse();
+        }
+        
+        // Experience questions
+        if (isExperienceQuery(userMsg)) {
+            return getExperienceResponse();
+        }
+        
+        // Math subject teaching questions
+        if (isMathSubjectQuery(userMsg)) {
+            const subjectResponse = getMathSubjectResponse(userMsg);
+            if (subjectResponse) return subjectResponse;
+        }
+        
+        // Greetings
+        if (lowerMsg.includes('hello') || lowerMsg.includes('hi') || lowerMsg.includes('hey')) {
+            return `👋 Hello! I'm ${TUTOR_NAME}. I teach JC H2/H1 Math, Secondary E-Math, A-Math, IP & IB Math. 📍 I teach in East, North East & Central. 💻 Zoom also available. Ask me about fees, discounts, or schedule!`;
+        }
+        
+        if (lowerMsg.includes('thank')) {
+            return "You're welcome! 😊 WhatsApp me at 9137 5097 if you'd like to check availability or book a lesson.";
+        }
+        
+        // Default response
+        return `I specialise in JC H2/H1 Math, Secondary E-Math, A-Math, IP & IB Math (20+ years experience, ex-MOE teacher). 💰 Fees: JC $80/hr, Secondary $60/hr. 👨‍👩‍👧 Sibling discounts available (WhatsApp for details). 📍 I teach in East, North East & Central. 💻 Zoom also available. What would you like to know?`;
+    }
 
     // ======================= FAQ ITEMS =======================
     const faqItems = [
-        { q: "What are your fees?", a: "JC/IP/IB: $80/hr or $120/1.5hrs. Secondary: $60/hr or $90/1.5hrs. 1-to-1 home tuition." },
-        { q: "Where do you teach?", a: "I teach in East (Tampines, Bedok, Pasir Ris), North East (Serangoon, Hougang, Sengkang, Punggol), and Central (Toa Payoh, Bishan, Ang Mo Kio). Not available for West area." },
-        { q: "Do you travel to student's home?", a: "Yes, 1-to-1 home tuition at your location. I cover East, North East, and Central Singapore. WhatsApp me your area to confirm." },
-        { q: "Which subjects do you teach?", a: "JC H2/H1 Math, Secondary E-Math, A-Math (Additional Math), IP Math, IB Math. 20+ years experience, ex-MOE teacher." },
-        { q: "Do you have experience with H2 Math?", a: "Yes, extensive experience with JC H2 Math syllabus. I've helped many students improve significantly." },
-        { q: "Can you teach Additional Math (A-Math)?", a: "Absolutely! A-Math is one of my specialities with 20+ years of coaching experience." },
-        { q: "What about IP / IB Math?", a: "Yes, I tutor IP Math and IB Math (AA/AI), adapting to each curriculum's requirements." },
-        { q: "How do I check available slots?", a: "Please WhatsApp me at 9137 5097 for current availability – I'll reply within a few hours." },
-        { q: "What is your teaching style?", a: "Conceptual clarity + guided practice + exam techniques. Customised to each student's needs." },
-        { q: "What are your qualifications?", a: "B.Sc Mathematics from NUS, ex-MOE school teacher (5 years), over 20 years private tuition experience." }
+        { q: "What are your fees?", a: "JC/IP/IB: $80/hr or $120/1.5hrs. Secondary: $60/hr or $90/1.5hrs. Payment at end of month via PayNow/PayLah. No registration fee. No travel fee." },
+        { q: "Where do you teach?", a: "East (Tampines, Bedok, Pasir Ris), North East (Serangoon, Hougang, Sengkang, Punggol), Central (Toa Payoh, Bishan, Ang Mo Kio). Not available for West area. No travel fee." },
+        { q: "Do you have sibling discounts?", a: "Yes! Please WhatsApp 9137 5097 for details on sibling discount structure." },
+        { q: "What is your cancellation policy?", a: "Please inform at least one day in advance. Lessons can be cancelled with proper notice. Make-up lessons subject to slot availability." },
+        { q: "Do you offer online lessons?", a: "Yes! Zoom lessons available at the same rate as home tuition." },
+        { q: "How many lessons per week?", a: "Usually one lesson per week. Extra lessons can be arranged before exams, subject to slot availability." },
+        { q: "Do you teach on weekends?", a: "Yes, weekend lessons are available subject to slot availability." },
+        { q: "Do you teach during school holidays?", a: "Yes, lessons continue as usual during school holidays." },
+        { q: "What makes you different from other tutors?", a: "I summarise difficult topics in an easy-to-understand manner. I correct mistakes on the spot. Students' interest in Math increases, and good grades follow naturally." },
+        { q: "What are your qualifications?", a: "B.Sc Mathematics from NUS, ex-MOE school teacher (5 years), over 20 years private tuition experience." },
+        { q: "Which subjects do you teach?", a: "JC H2/H1 Math, Secondary E-Math, A-Math (Additional Math), IP Math, IB Math." },
+        { q: "Can you teach H2 Math?", a: "Yes! Extensive experience with JC H2 Math syllabus. I've helped many students improve significantly." },
+        { q: "Can you teach Additional Math (A-Math)?", a: "Absolutely! A-Math is one of my specialities with 20+ years of coaching experience." }
     ];
 
     function loadFAQ() {
@@ -595,45 +719,6 @@
         msgDiv.appendChild(contentDiv);
         container.appendChild(msgDiv);
         container.scrollTop = container.scrollHeight;
-    }
-
-    function generateResponse(userMsg) {
-        const lowerMsg = userMsg.toLowerCase();
-        
-        // PRIORITY 1: Location/region questions → provide location info
-        if (isLocationQuery(userMsg)) {
-            return getLocationResponse();
-        }
-        
-        // PRIORITY 2: Fee-related questions → provide fee info
-        if (isFeeQuery(userMsg)) {
-            return getFeeResponse();
-        }
-        
-        // PRIORITY 3: Math subject teaching questions → respond with experience
-        if (isMathSubjectQuery(userMsg)) {
-            const subjectResponse = getMathSubjectResponse(userMsg);
-            if (subjectResponse) return subjectResponse;
-        }
-        
-        // PRIORITY 4: Check knowledge base for other topics
-        for (let cat in knowledgeBase) {
-            if (knowledgeBase[cat].keywords.some(kw => lowerMsg.includes(kw))) {
-                return knowledgeBase[cat].response;
-            }
-        }
-        
-        // Greetings
-        if (lowerMsg.includes('hello') || lowerMsg.includes('hi') || lowerMsg.includes('hey')) {
-            return `👋 Hello! I'm ${TUTOR_NAME}. I teach JC H2/H1 Math, Secondary E-Math, A-Math, IP & IB Math. 📍 I teach in East, North East & Central. Ask me about fees, locations, or subjects!`;
-        }
-        
-        if (lowerMsg.includes('thank')) {
-            return "You're welcome! 😊 WhatsApp me at 9137 5097 if you'd like to check availability or book a lesson.";
-        }
-        
-        // Default response
-        return `I specialise in JC H2/H1 Math, Secondary E-Math, A-Math, IP & IB Math (20+ years experience). 💰 Fees: JC $80/hr, Secondary $60/hr. 📍 I teach in East, North East & Central. 📱 WhatsApp 9137 5097 for availability. What would you like to know?`;
     }
 
     function sendMessage() {
