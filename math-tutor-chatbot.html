@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experienced Math Tutor - NUS Graduate | 20+ Years</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .app-container {
+            width: 550px;
+            max-width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .tabs {
+            display: flex;
+            background: #1a1a2e;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            background: #1a1a2e;
+            border: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 14px;
+            color: white;
+        }
+
+        .tab.active {
+            background: white;
+            color: #1a1a2e;
+            border-bottom: 3px solid #e67e22;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .chat-header h2 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+
+        .credentials {
+            background: #e67e22;
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            margin: 8px 5px 0 5px;
+        }
+
+        .badge {
+            background: rgba(255,255,255,0.15);
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            margin: 5px 3px;
+        }
+
+        .price-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 12px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            font-size: 13px;
+        }
+
+        .chat-messages {
+            height: 350px;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f0f2f5;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user { justify-content: flex-end; }
+        .message.bot { justify-content: flex-start; }
+
+        .message-content {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            word-wrap: break-word;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .user .message-content {
+            background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .bot .message-content {
+            background: white;
+            color: #333;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .chat-input-container {
+            padding: 15px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .chat-input:focus {
+            border-color: #e67e22;
+        }
+
+        .send-button {
+            background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .quick-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .quick-btn {
+            background: white;
+            border: 1px solid #e67e22;
+            color: #d35400;
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .quick-btn:hover {
+            background: #e67e22;
+            color: white;
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 10px 20px;
+            width: calc(100% - 40px);
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .whatsapp-btn:hover {
+            background: #128C7E;
+        }
+
+        .faq-container {
+            padding: 20px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .faq-search {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .faq-item {
+            background: #f8f9fa;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 15px;
+            background: white;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            border: 1px solid #e0e0e0;
+        }
+
+        .faq-answer {
+            padding: 15px;
+            display: none;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            line-height: 1.6;
+        }
+
+        .faq-answer.show {
+            display: block;
+        }
+
+        .contact-form {
+            padding: 20px;
+        }
+
+        .contact-form h3 {
+            margin-bottom: 20px;
+            color: #1a1a2e;
+        }
+
+        .contact-form input,
+        .contact-form textarea,
+        .contact-form select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            outline: none;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        .contact-form button {
+            background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        hr {
+            margin: 15px 0;
+            border-color: #ddd;
+        }
+
+        .profile-section {
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px;
+            text-align: center;
+        }
+
+        .subjects {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .subject-tag {
+            background: #e67e22;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('chat')">💬 Chat</button>
+            <button class="tab" onclick="switchTab('faq')">📚 FAQ</button>
+            <button class="tab" onclick="switchTab('contact')">📝 Enquire</button>
+        </div>
+
+        <!-- Chat Tab -->
+        <div id="chatTab" class="tab-content active">
+            <div class="chat-header">
+                <h2>🎓 Mr. [Your Name]</h2>
+                <div>
+                    <span class="credentials">🎓 B.Sc Mathematics, NUS</span>
+                    <span class="credentials">📚 20+ Years Experience</span>
+                </div>
+                <div class="price-card">
+                    <div class="price-row">
+                        <strong>📐 JC H2 Math / IP / IB Math</strong>
+                        <span>$80/hr | $120/1.5hrs</span>
+                    </div>
+                    <div class="price-row">
+                        <strong>📚 Secondary Math / A-Math</strong>
+                        <span>$60/hr | $90/1.5hrs</span>
+                    </div>
+                </div>
+                <div>
+                    <span class="badge">🏠 1-to-1 at your home</span>
+                    <span class="badge">📱 WhatsApp for slots</span>
+                </div>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot">
+                    <div class="message-content">
+                        👋 <strong>Hello! I'm an experienced Math tutor.</strong><br><br>
+                        
+                        🎓 <strong>My Background:</strong><br>
+                        • B.Sc Mathematics, NUS<br>
+                        • Former MOE School Teacher (5 years)<br>
+                        • 20+ years private tuition experience<br>
+                        • Specialist in Math, A-Math, H2 Math, IP & IB Math<br><br>
+                        
+                        💰 <strong>Rates:</strong><br>
+                        • JC/IP/IB: $80/hr | $120/1.5hrs<br>
+                        • Secondary: $60/hr | $90/1.5hrs<br><br>
+                        
+                        🏠 1-to-1 tuition at your home<br>
+                        📱 <strong>WhatsApp me to check availability!</strong><br><br>
+                        
+                        What level are you interested in?
+                    </div>
+                </div>
+            </div>
+            <div class="quick-buttons">
+                <button class="quick-btn" onclick="askQuickQuestion('JC H2 Math fees')">🎓 JC/IP/IB</button>
+                <button class="quick-btn" onclick="askQuickQuestion('Secondary Math fees')">📚 Secondary</button>
+                <button class="quick-btn" onclick="askQuickQuestion('Experience')">⭐ Experience</button>
+                <button class="quick-btn" onclick="askQuickQuestion('Availability')">📅 Check Slots</button>
+                <button class="quick-btn" onclick="askQuickQuestion('Teaching style')">📖 Teaching Style</button>
+            </div>
+            <div class="chat-input-container">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Type your question..." onkeypress="handleKeyPress(event)">
+                <button class="send-button" onclick="sendMessage()">Send</button>
+            </div>
+            <button class="whatsapp-btn" onclick="openWhatsApp()">
+                💬 WhatsApp Me to Check Availability
+            </button>
+        </div>
+
+        <!-- FAQ Tab -->
+        <div id="faqTab" class="tab-content">
+            <div class="faq-container">
+                <div class="profile-section">
+                    <strong>🎓 About Your Tutor</strong><br>
+                    • B.Sc Mathematics, National University of Singapore<br>
+                    • Former MOE School Teacher (5 years)<br>
+                    • 20+ years private tuition experience<br>
+                    • Specialist: Math, A-Math, H2 Math, IP Math, IB Math<br><br>
+                    <div class="subjects">
+                        <span class="subject-tag">E-Math</span>
+                        <span class="subject-tag">A-Math</span>
+                        <span class="subject-tag">H2 Math</span>
+                        <span class="subject-tag">IP Math</span>
+                        <span class="subject-tag">IB Math</span>
+                    </div>
+                </div>
+                <input type="text" class="faq-search" id="faqSearch" placeholder="🔍 Search FAQs..." onkeyup="searchFAQ()">
+                <div id="faqList"></div>
+                <button class="whatsapp-btn" onclick="openWhatsApp()" style="margin: 10px 0;">
+                    💬 WhatsApp for Slot Availability
+                </button>
+            </div>
+        </div>
+
+        <!-- Contact Tab -->
+        <div id="contactTab" class="tab-content">
+            <div class="contact-form">
+                <h3>📝 Register Your Interest</h3>
+                <input type="text" id="studentName" placeholder="Your name">
+                <select id="studentLevel">
+                    <option value="">Select Level</option>
+                    <option value="Secondary 1">Secondary 1</option>
+                    <option value="Secondary 2">Secondary 2</option>
+                    <option value="Secondary 3">Secondary 3</option>
+                    <option value="Secondary 4">Secondary 4</option>
+                    <option value="JC 1">JC 1</option>
+                    <option value="JC 2">JC 2</option>
+                    <option value="IP Year 1-4">IP (Year 1-4)</option>
+                    <option value="IB Diploma">IB Diploma</option>
+                </select>
+                <select id="studentSubject">
+                    <option value="">Select Subject</option>
+                    <option value="E-Math">E-Math</option>
+                    <option value="A-Math">A-Math</option>
+                    <option value="H2 Math">H2 Math</option>
+                    <option value="IP Math">IP Math</option>
+                    <option value="IB Math">IB Math</option>
+                </select>
+                <input type="text" id="studentArea" placeholder="Your area / location">
+                <textarea id="studentMessage" rows="4" placeholder="Preferred schedule or questions..."></textarea>
+                <button onclick="sendContactForm()">Send Enquiry</button>
+                <div id="successMessage" class="success-message">✓ Enquiry sent! I'll WhatsApp you within 24 hours.</div>
+                <hr>
+                <p style="text-align: center; font-size: 12px; color: #666;">Or WhatsApp me directly for faster response!</p>
+                <button class="whatsapp-btn" onclick="openWhatsApp()" style="margin-top: 10px;">
+                    💬 WhatsApp Me
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ CONFIGURATION ============
+        // REPLACE WITH YOUR ACTUAL WHATSAPP NUMBER
+        const WHATSAPP_NUMBER = "6591234567"; // CHANGE THIS - e.g., "6598765432"
+        
+        // Optional: Replace [Your Name] in header with your actual name
+        // Just edit line ~130 in the header section
+        
+        const knowledgeBase = {
+            jc_fees: {
+                keywords: ['jc', 'jc1', 'jc2', 'h2 math', 'jc h2', 'a level', 'junior college', 'jc fees', 'ib', 'ip'],
+                response: "🎓 <strong>JC / IP / IB Math - 1-to-1 Home Tuition</strong><br><br>💰 <strong>$80 per hour</strong><br>💰 <strong>$120 per 1.5 hours</strong><br><br>🏠 Tuition at your home<br>📖 Full syllabus coverage (Pure Math + Statistics)<br>📱 WhatsApp me to check available slots!"
+            },
+            sec_fees: {
+                keywords: ['secondary', 'sec', 'sec1', 'sec2', 'sec3', 'sec4', 'secondary math', 'o level', 'sec fees', 'e-math', 'a-math', 'additional math'],
+                response: "📚 <strong>Secondary Math (E-Math / A-Math) - 1-to-1 Home Tuition</strong><br><br>💰 <strong>$60 per hour</strong><br>💰 <strong>$90 per 1.5 hours</strong><br><br>🏠 Tuition at your home<br>📖 Cover both E-Math and A-Math syllabus<br>📱 WhatsApp me to check available slots!"
+            },
+            experience: {
+                keywords: ['experience', 'qualification', 'teacher', 'tutor', 'background', 'years', 'credential', 'nus', 'degree', 'school teacher'],
+                response: "⭐ <strong>My Qualifications & Experience:</strong><br><br>🎓 <strong>Education:</strong><br>• Bachelor of Science in Mathematics, NUS<br><br>📚 <strong>Teaching Experience:</strong><br>• Former MOE School Teacher (5 years)<br>• 20+ years private tuition experience<br>• Specialist in Math, A-Math, H2 Math, IP Math, IB Math<br><br>📈 <strong>Track Record:</strong><br>• Helped hundreds of students improve by 2-3 grades<br>• Strong focus on conceptual understanding & exam techniques"
+            },
+            teaching_style: {
+                keywords: ['teaching style', 'method', 'approach', 'how teach', 'lesson structure', 'help'],
+                response: "📖 <strong>My Teaching Approach:</strong><br><br>1️⃣ <strong>Assessment:</strong> Identify weak areas first session<br>2️⃣ <strong>Concept First:</strong> Build strong fundamentals before practice<br>3️⃣ <strong>Guided Practice:</strong> Work through examples together<br>4️⃣ <strong>Independent Work:</strong> Homework to reinforce learning<br>5️⃣ <strong>Exam Focus:</strong> Past year papers & time management<br><br>📝 Customized materials provided based on student's school syllabus!"
+            },
+            availability: {
+                keywords: ['availability', 'slot', 'available', 'free', 'timing', 'schedule', 'when', 'open', 'day', 'time'],
+                response: "📅 <strong>Slot Availability</strong><br><br>Slots vary weekly based on current students.<br><br>📱 <strong>Please WhatsApp me directly</strong> with:<br>• Your child's level<br>• Preferred days/times<br>• Your location<br><br>I'll reply within a few hours with available slots!"
+            },
+            booking: {
+                keywords: ['book', 'booking', 'sign up', 'register', 'enroll', 'start', 'how to book', 'trial'],
+                response: "📝 <strong>How to Book a Lesson:</strong><br><br>1️⃣ <strong>WhatsApp me</strong> with:<br>   • Student's level & subject<br>   • Preferred schedule<br>   • Home location<br><br>2️⃣ I'll confirm available slots<br><br>3️⃣ First lesson payment confirms booking<br><br>📱 <strong>WhatsApp me now to book!</strong>"
+            },
+            cancellation: {
+                keywords: ['cancel', 'cancellation', 'refund', 'miss', 'absent', 'postpone', 'reschedule'],
+                response: "❌ <strong>Cancellation Policy:</strong><br><br>• <strong>24+ hours notice:</strong> No charge<br>• <strong>Less than 24 hours:</strong> 50% of lesson fee<br>• <strong>No-show:</strong> Full lesson fee<br><br>🔄 Make-up lessons available with advance notice<br>📱 Just WhatsApp me to reschedule!"
+            },
+            materials: {
+                keywords: ['material', 'notes', 'worksheet', 'practice', 'homework', 'past year', 'resource'],
+                response: "📚 <strong>Materials Provided:</strong><br><br>• Customized notes based on school syllabus<br>• Topical practice worksheets<br>• Past year papers (schools & national exams)<br>• Weekly homework with detailed marking<br>• Exam strategies & time management tips<br><br>All materials included in fees!"
+            }
+        };
+
+        const faqItems = [
+            { q: "What are your qualifications?", a: "B.Sc Mathematics from NUS. Former MOE school teacher (5 years). 20+ years private tuition experience." },
+            { q: "What subjects do you teach?", a: "E-Math, A-Math, H2 Math, IP Math, and IB Math. From Secondary to JC levels." },
+            { q: "What are JC/IP/IB Math fees?", a: "$80 per hour or $120 per 1.5 hours. 1-to-1 home tuition." },
+            { q: "What are Secondary Math fees?", a: "$60 per hour or $90 per 1.5 hours. 1-to-1 home tuition." },
+            { q: "Do you have available slots?", a: "Slots change weekly. Please WhatsApp me directly to check current availability!" },
+            { q: "How do I book a lesson?", a: "WhatsApp me your child's level, preferred schedule, and location. I'll confirm available slots." },
+            { q: "What is your teaching style?", a: "Focus on conceptual understanding first, then guided practice. Customized materials and exam techniques included." },
+            { q: "What is the cancellation policy?", a: "24 hours notice = no charge. Less than 24 hours = 50% fee. No-show = full fee." },
+            { q: "Do you provide materials?", a: "Yes! Customized notes, worksheets, past year papers, and homework with marking all included." },
+            { q: "Do you travel to my home?", a: "Yes! I provide 1-to-1 tuition at your home in most areas of Singapore." },
+            { q: "What topics do you cover?", a: "Full MOE/IB syllabus for each level. Can focus on specific weak areas as needed." },
+            { q: "How long is each lesson?", a: "Typically 1 to 1.5 hours per session. Flexible based on student's needs." },
+            { q: "Do you have experience with IP/IB?", a: "Yes, 20+ years teaching IP and IB Math. Familiar with both curricula." }
+        ];
+
+        function loadFAQ() {
+            const container = document.getElementById('faqList');
+            if (!container) return;
+            container.innerHTML = '';
+            faqItems.forEach((item, index) => {
+                const faqDiv = document.createElement('div');
+                faqDiv.className = 'faq-item';
+                faqDiv.innerHTML = `
+                    <div class="faq-question" onclick="toggleAnswer(${index})">
+                        <span>❓ ${item.q}</span>
+                        <span>▼</span>
+                    </div>
+                    <div class="faq-answer" id="answer-${index}">
+                        📝 ${item.a}
+                    </div>
+                `;
+                container.appendChild(faqDiv);
+            });
+        }
+
+        function toggleAnswer(index) {
+            const answer = document.getElementById(`answer-${index}`);
+            if (answer) answer.classList.toggle('show');
+        }
+
+        function searchFAQ() {
+            const searchTerm = document.getElementById('faqSearch').value.toLowerCase();
+            const items = document.querySelectorAll('.faq-item');
+            items.forEach((item, index) => {
+                const question = faqItems[index].q.toLowerCase();
+                if (question.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function openWhatsApp() {
+            const defaultMsg = encodeURIComponent("Hi! I'm interested in Math tuition. Do you have any available slots?");
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${defaultMsg}`, '_blank');
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (!message) return;
+            
+            addMessage(message, 'user');
+            input.value = '';
+            
+            setTimeout(() => {
+                const response = generateResponse(message);
+                addMessage(response, 'bot');
+            }, 500);
+        }
+
+        function addMessage(text, sender) {
+            const container = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            const content = document.createElement('div');
+            content.className = 'message-content';
+            content.innerHTML = text;
+            messageDiv.appendChild(content);
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function generateResponse(question) {
+            const lowerQ = question.toLowerCase();
+            
+            for (const category in knowledgeBase) {
+                if (knowledgeBase[category].keywords.some(k => lowerQ.includes(k))) {
+                    return knowledgeBase[category].response;
+                }
+            }
+            
+            if (lowerQ.includes('hello') || lowerQ.includes('hi') || lowerQ.includes('hey')) {
+                return "👋 Hello! I'm an experienced Math tutor (NUS Math grad, ex-MOE teacher, 20+ years experience).<br><br>💰 Rates: JC/IP/IB - $80/hr | Secondary - $60/hr<br><br>What level are you interested in?";
+            }
+            
+            if (lowerQ.includes('slot') || lowerQ.includes('available')) {
+                return "📅 Please WhatsApp me directly for current slot availability! I'll check and reply within a few hours.";
+            }
+            
+            if (lowerQ.includes('whatsapp') || lowerQ.includes('contact')) {
+                return "📱 Click the green WhatsApp button below to message me directly. I'll respond within a few hours!";
+            }
+            
+            if (lowerQ.includes('thank')) {
+                return "You're welcome! 😊 Feel free to WhatsApp me if you have more questions about slots or would like to book a trial lesson!";
+            }
+            
+            return "📐 <strong>Math Home Tuition - 1-to-1</strong><br><br>🎓 JC/IP/IB: $80/hr | $120/1.5hrs<br>📚 Secondary: $60/hr | $90/1.5hrs<br><br>⭐ NUS Math grad | Ex-MOE teacher | 20+ years exp<br><br>📱 <strong>WhatsApp me to check availability!</strong><br><br>What level are you interested in?";
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') sendMessage();
+        }
+
+        function askQuickQuestion(question) {
+            document.getElementById('chatInput').value = question;
+            sendMessage();
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.getElementById(`${tabName}Tab`).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function sendContactForm() {
+            const name = document.getElementById('studentName').value;
+            const level = document.getElementById('studentLevel').value;
+            const subject = document.getElementById('studentSubject').value;
+            const area = document.getElementById('studentArea').value;
+            const message = document.getElementById('studentMessage').value;
+            
+            if (!name || !level || !subject || !area) {
+                alert('Please fill in name, level, subject, and location');
+                return;
+            }
+            
+            const successMsg = document.getElementById('successMessage');
+            successMsg.style.display = 'block';
+            
+            document.getElementById('studentName').value = '';
+            document.getElementById('studentLevel').value = '';
+            document.getElementById('studentSubject').value = '';
+            document.getElementById('studentArea').value = '';
+            document.getElementById('studentMessage').value = '';
+            
+            setTimeout(() => {
+                successMsg.style.display = 'none';
+            }, 3000);
+            
+            console.log('Enquiry:', {name, level, subject, area, message});
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadFAQ();
+        });
+    </script>
+</body>
+</html>
