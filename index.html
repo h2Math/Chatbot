@@ -96,6 +96,14 @@
             font-weight: 500;
         }
 
+        .location-badge {
+            background: #2c7da0;
+            padding: 5px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
         .chat-messages {
             height: 370px;
             overflow-y: auto;
@@ -311,6 +319,20 @@
             font-size: 13px;
             text-align: center;
         }
+        .area-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .area-tag {
+            background: #2c7da0;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+        }
     </style>
 </head>
 <body>
@@ -332,6 +354,11 @@
                 <span class="badge">📖 IP / IB Math</span>
                 <span class="badge">🎓 JC & Sec</span>
             </div>
+            <div class="badge-row">
+                <span class="location-badge">📍 East</span>
+                <span class="location-badge">📍 North East</span>
+                <span class="location-badge">📍 Central</span>
+            </div>
         </div>
         <div class="chat-messages" id="chatMessages">
             <div class="message bot">
@@ -339,6 +366,7 @@
                     👋 <strong>Hi, I'm Mr Roland Lee.</strong><br><br>
                     I specialise in <strong>JC H2/H1 Math, Secondary E-Math, A-Math (Additional Math), IP Math, and IB Math</strong>.<br><br>
                     ✅ <strong>More than 20 years of teaching experience</strong> (ex-MOE school teacher + full-time tutor).<br><br>
+                    📍 <strong>I teach in:</strong> East, North East, and Central Singapore (not West).<br><br>
                     📱 <strong>WhatsApp me at 9137 5097</strong> to check slot availability & discuss your learning needs.<br><br>
                     What would you like to know?
                 </div>
@@ -346,13 +374,13 @@
         </div>
         <div class="quick-buttons">
             <button class="quick-btn" onclick="askQuickQuestion('What are your fees?')">💰 Fees</button>
+            <button class="quick-btn" onclick="askQuickQuestion('Where do you teach?')">📍 Locations</button>
             <button class="quick-btn" onclick="askQuickQuestion('Can you teach H2 Math?')">📐 H2 Math</button>
             <button class="quick-btn" onclick="askQuickQuestion('Can you teach A-Math?')">📘 A-Math</button>
-            <button class="quick-btn" onclick="askQuickQuestion('Do you teach secondary math?')">📚 Secondary</button>
             <button class="quick-btn" onclick="askQuickQuestion('What is your availability?')">📅 Slots</button>
         </div>
         <div class="chat-input-container">
-            <input type="text" class="chat-input" id="chatInput" placeholder="Ask about fees, subjects, schedule..." onkeypress="handleKeyPress(event)">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Ask about fees, locations, subjects..." onkeypress="handleKeyPress(event)">
             <button class="send-button" onclick="sendMessage()">Send</button>
         </div>
         <button class="whatsapp-btn" onclick="openWhatsApp()">
@@ -365,7 +393,8 @@
         <div class="faq-container">
             <div class="profile-note">
                 ⭐ <strong>Mr Roland Lee</strong> – Dedicated full-time Math tutor<br>
-                📚 20+ years experience | Ex-MOE teacher | NUS Math graduate
+                📚 20+ years experience | Ex-MOE teacher | NUS Math graduate<br>
+                📍 Teaching areas: <strong>East, North East, Central</strong>
             </div>
             <input type="text" class="faq-search" id="faqSearch" placeholder="🔍 Search FAQ..." onkeyup="searchFAQ()">
             <div id="faqList"></div>
@@ -388,7 +417,7 @@
                 <option value="IP Year">Integrated Programme (IP)</option>
                 <option value="IB Diploma">IB Math</option>
             </select>
-            <input type="text" id="studentArea" placeholder="Your location / estate">
+            <input type="text" id="studentArea" placeholder="Your location / estate (e.g., Tampines, Serangoon, Toa Payoh)">
             <textarea id="studentMessage" rows="3" placeholder="Preferred schedule or questions..."></textarea>
             <button onclick="sendContactForm()">Send Enquiry</button>
             <div id="successMessage" class="success-message">✓ Enquiry sent! Mr Lee will reply via WhatsApp soon.</div>
@@ -403,6 +432,17 @@
     const WHATSAPP_NUMBER = "6591375097";  // 65 + 91375097
     const TUTOR_NAME = "Mr Roland Lee";
 
+    // ======================= LOCATION INFORMATION =======================
+    function getLocationResponse() {
+        return "📍 <strong>Where I Teach:</strong><br><br>" +
+               "I conduct 1-to-1 home tuition in the following areas:<br><br>" +
+               "✅ <strong>East:</strong> Tampines, Bedok, Pasir Ris, Simei, East Coast, Marine Parade, Changi<br>" +
+               "✅ <strong>North East:</strong> Serangoon, Hougang, Sengkang, Punggol, Buangkok, Kovan<br>" +
+               "✅ <strong>Central:</strong> Toa Payoh, Bishan, Ang Mo Kio, Novena, Newton, Balestier, Thomson<br><br>" +
+               "❌ <strong>Not available for West area</strong> (Jurong, Clementi, Bukit Batok, Bukit Panjang, Choa Chu Kang)<br><br>" +
+               "📱 WhatsApp me at 9137 5097 with your postal code to confirm if I can travel to your location!";
+    }
+
     // ======================= FEE INFORMATION =======================
     function getFeeResponse() {
         return "💰 <strong>My Tuition Fees:</strong><br><br>" +
@@ -413,6 +453,7 @@
                "• $60 per hour<br>" +
                "• $90 per 1.5 hours<br><br>" +
                "🏠 1-to-1 home tuition at your location<br>" +
+               "📍 I teach in East, North East & Central Singapore<br>" +
                "📱 WhatsApp me at 9137 5097 to check availability!";
     }
 
@@ -421,24 +462,36 @@
         const lowerSubject = subject.toLowerCase();
         
         if (lowerSubject.includes('h2') || (lowerSubject.includes('jc') && lowerSubject.includes('math'))) {
-            return "📐 Yes, I teach <strong>JC H2 Math</strong>! With over 20 years of experience (including as a former MOE school teacher), I've helped many JC students master H2 Math - both Pure Math and Statistics. I provide 1-to-1 home tuition tailored to the MOE syllabus. WhatsApp me at 9137 5097 to discuss your needs!";
+            return "📐 Yes, I teach <strong>JC H2 Math</strong>! With over 20 years of experience (including as a former MOE school teacher), I've helped many JC students master H2 Math - both Pure Math and Statistics. I provide 1-to-1 home tuition tailored to the MOE syllabus. 📍 I teach in East, North East & Central. WhatsApp me at 9137 5097 to discuss your needs!";
         }
         if (lowerSubject.includes('h1')) {
-            return "✅ Yes, I teach <strong>JC H1 Math</strong>! With my 20+ years of teaching experience (ex-MOE teacher), I simplify H1 Math concepts like Probability, Statistics, and Calculus. Many of my H1 students have shown great improvement. WhatsApp 9137 5097 to check slots!";
+            return "✅ Yes, I teach <strong>JC H1 Math</strong>! With my 20+ years of teaching experience (ex-MOE teacher), I simplify H1 Math concepts like Probability, Statistics, and Calculus. Many of my H1 students have shown great improvement. 📍 Serving East, North East & Central. WhatsApp 9137 5097 to check slots!";
         }
         if (lowerSubject.includes('additional') || lowerSubject.includes('a-math') || lowerSubject.includes('a math') || lowerSubject.includes('add math')) {
-            return "📘 Yes! <strong>Additional Mathematics (A-Math)</strong> is one of my specialisations. With over 20 years of experience teaching A-Math, I help students master quadratic equations, trigonometry, differentiation, and integration. WhatsApp me at 9137 5097 for available slots!";
+            return "📘 Yes! <strong>Additional Mathematics (A-Math)</strong> is one of my specialisations. With over 20 years of experience teaching A-Math, I help students master quadratic equations, trigonometry, differentiation, and integration. 📍 I teach in East, North East & Central. WhatsApp me at 9137 5097 for available slots!";
         }
         if (lowerSubject.includes('e-math') || lowerSubject.includes('e math') || (lowerSubject.includes('secondary') && lowerSubject.includes('math'))) {
-            return "📚 Definitely! I teach <strong>Secondary E-Math</strong>. With my ex-MOE school teacher background and 20+ years of private tutoring, I focus on building strong fundamentals in algebra, geometry, and data analysis. WhatsApp 9137 5097 to arrange a time!";
+            return "📚 Definitely! I teach <strong>Secondary E-Math</strong>. With my ex-MOE school teacher background and 20+ years of private tutoring, I focus on building strong fundamentals in algebra, geometry, and data analysis. 📍 Available in East, North East & Central. WhatsApp 9137 5097 to arrange a time!";
         }
         if (lowerSubject.includes('ip')) {
-            return "🎓 Yes, I tutor <strong>IP Math</strong> (Integrated Programme). I understand the rigour required and help IP students excel in advanced problem-solving. With over 20 years of experience, I ensure strong conceptual clarity. WhatsApp me at 9137 5097!";
+            return "🎓 Yes, I tutor <strong>IP Math</strong> (Integrated Programme). I understand the rigour required and help IP students excel in advanced problem-solving. With over 20 years of experience, I ensure strong conceptual clarity. 📍 Serving East, North East & Central. WhatsApp me at 9137 5097!";
         }
         if (lowerSubject.includes('ib')) {
-            return "🌍 Yes, I teach <strong>IB Math</strong> (both Analysis & Approaches and Applications & Interpretation). I've guided IB students for many years, focusing on internal assessments and exam strategies. WhatsApp 9137 5097 to discuss!";
+            return "🌍 Yes, I teach <strong>IB Math</strong> (both Analysis & Approaches and Applications & Interpretation). I've guided IB students for many years, focusing on internal assessments and exam strategies. 📍 I teach in East, North East & Central. WhatsApp 9137 5097 to discuss!";
         }
         return null;
+    }
+
+    // ======================= CHECK IF QUESTION IS ABOUT LOCATION =======================
+    function isLocationQuery(text) {
+        const lower = text.toLowerCase();
+        const locationKeywords = [
+            'location', 'area', 'region', 'locate', 'where', 'teach where', 'which area', 
+            'east', 'west', 'north', 'south', 'central', 'tampines', 'bedok', 'pasir ris',
+            'serangoon', 'hougang', 'sengkang', 'punggol', 'toa payoh', 'bishan', 'ang mo kio',
+            'jurong', 'clementi', 'bukit', 'travel', 'distance', 'come to', 'home location'
+        ];
+        return locationKeywords.some(keyword => lower.includes(keyword));
     }
 
     // ======================= CHECK IF QUESTION IS ABOUT FEES =======================
@@ -466,18 +519,14 @@
         },
         booking: {
             keywords: ['book', 'booking', 'sign up', 'register', 'enroll', 'start', 'how to start'],
-            response: "📝 To book: 1) WhatsApp 9137 5097 with your level & subject. 2) Share preferred schedule. 3) I'll confirm available slots. Looking forward to helping you excel in Math!"
+            response: "📝 To book: 1) WhatsApp 9137 5097 with your level & subject. 2) Share your location (East, North East, Central only). 3) Share preferred schedule. 4) I'll confirm available slots. Looking forward to helping you excel in Math!"
         },
         cancellation: {
             keywords: ['cancel', 'cancellation', 'refund', 'miss', 'absent', 'postpone', 'reschedule'],
             response: "❌ 24+ hours notice → no charge. Less than 24 hours → 50% fee. No-show → full fee. Make-up lessons can be arranged via WhatsApp."
         },
-        location: {
-            keywords: ['location', 'area', 'travel', 'distance', 'east', 'west', 'north', 'south', 'central'],
-            response: "🏠 I travel to your home for 1-to-1 tuition (most parts of Singapore). WhatsApp 9137 5097 your postal code and I'll confirm."
-        },
         experience: {
-            keywords: ['experience', 'qualification', 'background', 'years', 'how long', 'credential'],
+            keywords: ['experience', 'qualification', 'background', 'years', 'how long', 'credential', 'ex-moe', 'nus'],
             response: "⭐ I have over 20 years of teaching experience, including 5 years as an MOE school teacher. I hold a Bachelor of Science in Mathematics from NUS. I specialise in JC H2/H1 Math, Secondary E-Math, A-Math, IP Math, and IB Math."
         }
     };
@@ -485,12 +534,13 @@
     // ======================= FAQ ITEMS =======================
     const faqItems = [
         { q: "What are your fees?", a: "JC/IP/IB: $80/hr or $120/1.5hrs. Secondary: $60/hr or $90/1.5hrs. 1-to-1 home tuition." },
+        { q: "Where do you teach?", a: "I teach in East (Tampines, Bedok, Pasir Ris), North East (Serangoon, Hougang, Sengkang, Punggol), and Central (Toa Payoh, Bishan, Ang Mo Kio). Not available for West area." },
+        { q: "Do you travel to student's home?", a: "Yes, 1-to-1 home tuition at your location. I cover East, North East, and Central Singapore. WhatsApp me your area to confirm." },
         { q: "Which subjects do you teach?", a: "JC H2/H1 Math, Secondary E-Math, A-Math (Additional Math), IP Math, IB Math. 20+ years experience, ex-MOE teacher." },
         { q: "Do you have experience with H2 Math?", a: "Yes, extensive experience with JC H2 Math syllabus. I've helped many students improve significantly." },
         { q: "Can you teach Additional Math (A-Math)?", a: "Absolutely! A-Math is one of my specialities with 20+ years of coaching experience." },
         { q: "What about IP / IB Math?", a: "Yes, I tutor IP Math and IB Math (AA/AI), adapting to each curriculum's requirements." },
         { q: "How do I check available slots?", a: "Please WhatsApp me at 9137 5097 for current availability – I'll reply within a few hours." },
-        { q: "Do you travel to student's home?", a: "Yes, 1-to-1 home tuition at your location. WhatsApp me your area to confirm." },
         { q: "What is your teaching style?", a: "Conceptual clarity + guided practice + exam techniques. Customised to each student's needs." },
         { q: "What are your qualifications?", a: "B.Sc Mathematics from NUS, ex-MOE school teacher (5 years), over 20 years private tuition experience." }
     ];
@@ -550,18 +600,23 @@
     function generateResponse(userMsg) {
         const lowerMsg = userMsg.toLowerCase();
         
-        // PRIORITY 1: Fee-related questions → provide fee info
+        // PRIORITY 1: Location/region questions → provide location info
+        if (isLocationQuery(userMsg)) {
+            return getLocationResponse();
+        }
+        
+        // PRIORITY 2: Fee-related questions → provide fee info
         if (isFeeQuery(userMsg)) {
             return getFeeResponse();
         }
         
-        // PRIORITY 2: Math subject teaching questions → respond with experience
+        // PRIORITY 3: Math subject teaching questions → respond with experience
         if (isMathSubjectQuery(userMsg)) {
             const subjectResponse = getMathSubjectResponse(userMsg);
             if (subjectResponse) return subjectResponse;
         }
         
-        // PRIORITY 3: Check knowledge base for other topics
+        // PRIORITY 4: Check knowledge base for other topics
         for (let cat in knowledgeBase) {
             if (knowledgeBase[cat].keywords.some(kw => lowerMsg.includes(kw))) {
                 return knowledgeBase[cat].response;
@@ -570,7 +625,7 @@
         
         // Greetings
         if (lowerMsg.includes('hello') || lowerMsg.includes('hi') || lowerMsg.includes('hey')) {
-            return `👋 Hello! I'm ${TUTOR_NAME}. I teach JC H2/H1 Math, Secondary E-Math, A-Math, IP & IB Math. Ask me about fees, subjects, or availability!`;
+            return `👋 Hello! I'm ${TUTOR_NAME}. I teach JC H2/H1 Math, Secondary E-Math, A-Math, IP & IB Math. 📍 I teach in East, North East & Central. Ask me about fees, locations, or subjects!`;
         }
         
         if (lowerMsg.includes('thank')) {
@@ -578,7 +633,7 @@
         }
         
         // Default response
-        return `I specialise in JC H2/H1 Math, Secondary E-Math, A-Math, IP & IB Math (20+ years experience). 💰 Fees: JC $80/hr, Secondary $60/hr. 📱 WhatsApp 9137 5097 for availability. What would you like to know?`;
+        return `I specialise in JC H2/H1 Math, Secondary E-Math, A-Math, IP & IB Math (20+ years experience). 💰 Fees: JC $80/hr, Secondary $60/hr. 📍 I teach in East, North East & Central. 📱 WhatsApp 9137 5097 for availability. What would you like to know?`;
     }
 
     function sendMessage() {
